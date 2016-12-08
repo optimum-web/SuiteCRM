@@ -87,6 +87,7 @@ class SugarPHPMailer extends PHPMailer
         $this->WordWrap		= 996;
 		// cn: gmail fix
 		$this->protocol = ($this->oe->mail_smtpssl == 1) ? "ssl://" : $this->protocol;
+		$this->SMTPOptions = array('ssl' => array('allow_self_signed' => true));
 
 	}
 
@@ -408,7 +409,7 @@ eoq;
 	}
 
 	function SmtpConnect($options = array()) {
-		$connection = parent::SmtpConnect();
+		$connection = parent::SmtpConnect($options);
 		if (!$connection) {
 			global $app_strings;
 			if(isset($this->oe) && $this->oe->type == "system") {
